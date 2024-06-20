@@ -1,17 +1,52 @@
-import React from 'react'
-import Card from '../Components/Card'
+import React, { useContext, useEffect } from 'react';
+import { GlobalContext } from '../Components/utils/global.context';
+import Card from '../Components/Card';
+import '../index.css';
 
-//Este componente debera ser estilado como "dark" o "light" dependiendo del theme del Context
+const fetchDentists = async (dispatch) => {
+  try {
+    const response = await fetch('https://api.example.com/dentists');
+    const data = await response.json();
+    
+    dispatch({ type: 'FETCH_DENTISTS_SUCCESS', payload: data });
+  } catch (error) {
+    dispatch({ type: 'FETCH_DENTISTS_ERROR', payload: error.message });
+  }
+};
 
 const Home = () => {
-  return (
-    <main className="" >
-      <h1>Home</h1>
-      <div className='card-grid'>
-        {/* Aqui deberias renderizar las cards */}
-      </div>
-    </main>
-  )
-}
+  const { state, dispatch } = useContext(GlobalContext);
 
-export default Home
+  useEffect(() => {
+    if (state.data.length === 0) {
+      fetchDentists(dispatch);
+    }
+  }, [state.data, dispatch]);
+
+  if (state.loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (state.error) {
+    return <div>Error: {state.error}</div>;
+  }
+
+  return (
+    <div className={state.theme}>
+      <h1>Home</h1>
+      <div className="card-grid">
+        {state.data.map(dentist => (
+          <Card key={dentist.id} name={dentist.name} username={dentist.username} id={dentist.id}/>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Home;
+
+
+
+
+
+

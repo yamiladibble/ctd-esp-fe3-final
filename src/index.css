@@ -1,5 +1,6 @@
 body {
   margin: 0;
+  margin-top: 40px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -25,9 +26,41 @@ h1{
 
 nav{
   display: flex;
-  width: 80vw;
-  justify-content: flex-start;
-  padding: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2px 20px;
+  background-color: rgb(188, 187, 187);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000; 
+  
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 40px; 
+  margin-right: 20px; 
+}
+.nav-links {
+  display: flex;
+  gap: 15px;
+  margin-right: auto;
+}
+.nav-link {
+  text-decoration: none;
+  color: var(--text);
+}
+.theme-button {
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: var(--button-background);
+  color: var(--button-text);
+  border: none;
+  border-radius: 5px;
 }
 
 a{
@@ -43,22 +76,55 @@ a:hover{
 footer {
   display: flex;
   justify-content: center;
+  align-items: flex-start; 
   text-align: center;
   padding: 2rem;
   position: relative;
   bottom: 0;
-  width: 90%;
+  width: 100%;
   height: 40px;
-  margin-top: 2rem;
+  margin-top: 20rem;
+  position: relative; 
 }
 
-footer > img{
+.back-to-top-button {
+  width: 100%;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 16px; 
+  font-size: 16px;
+  cursor: pointer;
+  position: absolute; 
+  top: -50px; 
+}
+
+.back-to-top-button:hover {
+  opacity: 0.8;
+}
+
+footer > img {
   width: 200px;
   margin: 0;
+  color: #000;
 }
-footer > p{
+
+.footer-icon {
+  width: 40px;
+  height: 40px;
+  color: #000;
+}
+
+footer > p {
   margin: 0;
   padding-top: 0.7rem;
+}
+
+.contact{
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
 }
 
 form{
@@ -70,6 +136,17 @@ form{
   margin: 0 auto;
 }
 
+.form-button{
+  width: 320px;
+  padding: 10px;
+  background-color: #ff0000;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+
 .card{
   display: flex;
   justify-content: space-around;
@@ -78,6 +155,12 @@ form{
   width: 200px;
   padding: 0.5rem 0.5rem 0 0.5rem;
   border: 0.5px solid rgb(136, 136, 136);
+}
+
+.card-image {
+  width: 200px; 
+  height: auto;
+  margin-bottom: 1rem; 
 }
 
 .card:hover{

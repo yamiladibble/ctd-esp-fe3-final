@@ -1,15 +1,73 @@
-import { createContext } from "react";
+import React, { createContext, useReducer, useEffect } from 'react';
 
-export const initialState = {theme: "", data: []}
+const initialState = { theme: 'light', data: [], loading: true, error: null,  favorites: JSON.parse(localStorage.getItem('favs')) || [], };
 
-export const ContextGlobal = createContext(undefined);
+const GlobalContext = createContext(initialState);
 
-export const ContextProvider = ({ children }) => {
-  //Aqui deberan implementar la logica propia del Context, utilizando el hook useMemo
+const globalReducer = (state, action) => {
+  switch (action.type) {
+    case 'TOGGLE_THEME':
+      return {
+        ...state,
+        theme: state.theme === 'light' ? 'dark' : 'light'
+      };
+    case 'FETCH_DENTISTS_REQUEST':
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
+    case 'FETCH_DENTISTS_SUCCESS':
+      return {
+        ...state,
+        data: action.payload,
+        loading: false
+      };
+    case 'FETCH_DENTISTS_FAILURE':
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
+      };
+      case 'ADD_TO_FAVORITES':
+      const newFavorite = action.payload;
+      const updatedFavorites = [...state.favorites, newFavorite];
+      localStorage.setItem('favs', JSON.stringify(updatedFavorites)); 
+      return { ...state, favorites: updatedFavorites };
+    default:
+      return state;
+  }
+};
+
+const fetchDentists = async (dispatch) => {
+  dispatch({ type: 'FETCH_DENTISTS_REQUEST' });
+  try {
+    const response = await fetch('https://jsonplaceholder.typicode.com/users'); 
+    const data = await response.json();
+    dispatch({ type: 'FETCH_DENTISTS_SUCCESS', payload: data });
+  } catch (error) {
+    dispatch({ type: 'FETCH_DENTISTS_FAILURE', payload: error.message });
+  }
+};
+
+const GlobalProvider = ({ children }) => {
+  const [state, dispatch] = useReducer(globalReducer, initialState);
+
+  useEffect(() => {
+    if (state.data.length === 0) {
+      fetchDentists(dispatch);
+    }
+  }, [state.data]);
 
   return (
-    <ContextGlobal.Provider value={{}}>
+    <GlobalContext.Provider value={{ state, dispatch }}>
       {children}
-    </ContextGlobal.Provider>
+    </GlobalContext.Provider>
   );
 };
+
+export { GlobalProvider };
+export  {GlobalContext} ;
+
+
+
