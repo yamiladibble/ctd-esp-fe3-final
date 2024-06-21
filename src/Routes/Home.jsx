@@ -32,7 +32,7 @@ const Home = () => {
   }
 
   return (
-    <div className={state.theme}>
+    <div >
       <h1>Home</h1>
       <div className="card-grid">
         {state.data.map(dentist => (

@@ -72,7 +72,7 @@ const Form = () => {
       </div>
       <button className='form-button' type="submit">Enviar</button>
       {Object.keys(errors).length > 0 && (
-        <p className="error">Por favor verifique su información nuevamente</p>
+        <p className="error">Por favor verifique su información nuevamente.YD</p>
       )}
       {successMessage && <p className="success">{successMessage}</p>}
     </form>

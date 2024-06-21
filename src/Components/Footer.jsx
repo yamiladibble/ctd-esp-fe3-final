@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 import '../index.css';
 
 const Footer = () => {
@@ -9,7 +9,7 @@ const Footer = () => {
     });
   };
   return (
-    <footer>
+    <footer >
        <button onClick={scrollToTop} className="back-to-top-button">Volver al inicio</button>
 
         <p>Powered by</p>

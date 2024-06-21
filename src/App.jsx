@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { GlobalContext } from './Components/utils/global.context';
 import Navbar from './Components/Navbar';
 import Footer from './Components/Footer';
 import Home from './Routes/Home';
@@ -9,8 +10,10 @@ import Favs from './Routes/Favs';
 import './index.css';
 
  const App = () => {
+  const { state } = useContext(GlobalContext);
   return (
-       <Router> 
+    <div className={state.theme}>
+      <Router> 
         <Navbar />
          <Routes>
           <Route path="/" element={<Home />} />
@@ -19,7 +22,9 @@ import './index.css';
           <Route path="/favs" element={<Favs />} />
         </Routes> */
         <Footer />
-       </Router> 
+       </Router>
+    </div>
+       
   );
 };
 
